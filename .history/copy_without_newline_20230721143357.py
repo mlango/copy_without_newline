@@ -1,7 +1,6 @@
 import sys
 import pyperclip
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
-from PyQt5.QtGui import QClipboard
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QClipboard, QMessageBox
 
 
 class MainWindow(QWidget):
@@ -17,6 +16,7 @@ class MainWindow(QWidget):
         self.output_edit.setFixedHeight(150)  # 设置输出框高度
         self.output_edit.setReadOnly(True)  # 输出框设置为只读
         self.copy_button = QPushButton("复制")
+        self.read_clipboard_button = QPushButton("读取剪贴板")
 
         # 创建布局
         input_layout = QHBoxLayout()
@@ -49,10 +49,6 @@ class MainWindow(QWidget):
         self.input_edit.textChanged.connect(self.process_text)  # 当输入框的文本发生变化时，处理文本
         self.copy_button.clicked.connect(self.copy_output)  # 点击复制按钮时，复制输出框中的文本
 
-        # 监视剪贴板变化
-        clipboard = QApplication.clipboard()
-        clipboard.dataChanged.connect(self.read_clipboard)
-
     def process_text(self):
         text = self.input_edit.toPlainText()  # 获取输入框中的文本
         text = text.replace('\n', ' ')  # 将换行符替换为空格
@@ -62,16 +58,6 @@ class MainWindow(QWidget):
         text = self.output_edit.toPlainText()  # 获取输出框中的文本
         pyperclip.copy(text)  # 将输出框中的文本复制到剪贴板中
         self.input_edit.clear()  # 清空输入框中的文本
-
-    def read_clipboard(self):
-        clipboard = QApplication.clipboard()  # 获取剪贴板对象
-        clipboard_text = clipboard.text()  # 从剪贴板中读取文本
-
-        # 将读取到的文本显示在输入框中
-        if clipboard_text:
-            self.input_edit.setText(clipboard_text)
-        else:
-            QMessageBox.warning(self, "错误", "剪贴板中没有文本")
 
 
 if __name__ == "__main__":

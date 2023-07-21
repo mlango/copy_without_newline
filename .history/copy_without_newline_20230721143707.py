@@ -1,7 +1,6 @@
 import sys
 import pyperclip
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
-from PyQt5.QtGui import QClipboard
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QClipboard, QMessageBox
 
 
 class MainWindow(QWidget):

@@ -1,7 +1,6 @@
 import sys
 import pyperclip
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
-from PyQt5.QtGui import QClipboard
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QClipboard, QMessageBox
 
 
 class MainWindow(QWidget):
@@ -62,16 +61,6 @@ class MainWindow(QWidget):
         text = self.output_edit.toPlainText()  # 获取输出框中的文本
         pyperclip.copy(text)  # 将输出框中的文本复制到剪贴板中
         self.input_edit.clear()  # 清空输入框中的文本
-
-    def read_clipboard(self):
-        clipboard = QApplication.clipboard()  # 获取剪贴板对象
-        clipboard_text = clipboard.text()  # 从剪贴板中读取文本
-
-        # 将读取到的文本显示在输入框中
-        if clipboard_text:
-            self.input_edit.setText(clipboard_text)
-        else:
-            QMessageBox.warning(self, "错误", "剪贴板中没有文本")
 
 
 if __name__ == "__main__":
