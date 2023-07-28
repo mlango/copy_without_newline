@@ -1,7 +1,8 @@
 import sys
 import pyperclip
-from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
+#from PyQt5.QtGui import QClipboard
+
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -50,20 +51,17 @@ class MainWindow(QWidget):
 
         # 监视剪贴板变化
         clipboard = QApplication.clipboard()
-        clipboard.dataChanged.connect(self.on_clipboard_data_changed)
+        clipboard.dataChanged.connect(self.read_clipboard)
 
     def process_text(self):
         text = self.input_edit.toPlainText()  # 获取输入框中的文本
         text = text.replace('\n', ' ')  # 将换行符替换为空格
         self.output_edit.setText(text)  # 将处理后的文本显示在输出框中
-        self.copy_output()  # 复制输出框中的文本
 
     def copy_output(self):
         text = self.output_edit.toPlainText()  # 获取输出框中的文本
         pyperclip.copy(text)  # 将输出框中的文本复制到剪贴板中
-        
-    def on_clipboard_data_changed(self):
-        QTimer.singleShot(2000, self.read_clipboard)  # 延迟 2 秒后再执行剪贴板读取操作
+        self.input_edit.clear()  # 清空输入框中的文本
 
     def read_clipboard(self):
         clipboard = QApplication.clipboard()  # 获取剪贴板对象
