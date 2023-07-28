@@ -55,7 +55,6 @@ class MainWindow(QWidget):
     def process_text(self):
         text = self.input_edit.toPlainText()  # 获取输入框中的文本
         text = text.replace('\n', ' ')  # 将换行符替换为空格
-        text = re.sub(r'\x02', '', text)  # 去除开始文本字符
         self.output_edit.setText(text)  # 将处理后的文本显示在输出框中
         self.copy_output()  # 复制输出框中的文本
 
